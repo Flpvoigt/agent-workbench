@@ -13,6 +13,7 @@ from agent_workbench.models import AgentSession, ProcessInfo, RepositoryStatus
 
 
 CREATE_NEW_CONSOLE = 0x00000010 if os.name == "nt" else 0
+CREATE_NO_WINDOW = 0x08000000 if os.name == "nt" else 0
 SESSION_ID_PATTERN = re.compile(
     r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}",
     re.IGNORECASE,
@@ -25,6 +26,7 @@ def _run(args: list[str], cwd: Path | None = None, timeout: int = 8) -> tuple[in
             args,
             cwd=cwd,
             capture_output=True,
+            creationflags=CREATE_NO_WINDOW,
             text=True,
             encoding="utf-8",
             errors="replace",
