@@ -10,6 +10,7 @@ from unittest.mock import patch
 import agent_workbench.services as services
 from agent_workbench.services import (
     discover_sessions,
+    inspect_session,
     load_repository_paths,
     save_repository_paths,
     session_id_from_path,
@@ -45,6 +46,45 @@ class SessionDiscoveryTests(unittest.TestCase):
     def test_extracts_uuid_from_rollout_filename(self) -> None:
         path = Path("rollout-2026-10-09T12-00-00-0199aa11-bb22-7c33-8d44-556677889900.jsonl")
         self.assertEqual(session_id_from_path(path), "0199aa11-bb22-7c33-8d44-556677889900")
+
+    def test_session_details_use_real_metadata_activity_and_files(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / "rollout-0199aa11-bb22-7c33-8d44-556677889900.jsonl"
+            events = [
+                {
+                    "type": "session_meta",
+                    "payload": {
+                        "id": "0199aa11-bb22-7c33-8d44-556677889900",
+                        "cwd": str(root / "agent-workbench"),
+                        "source": "cli",
+                    },
+                },
+                {
+                    "type": "response_item",
+                    "payload": {
+                        "type": "message",
+                        "role": "user",
+                        "content": [{"type": "input_text", "text": "Redesenhe o mapa de agents"}],
+                    },
+                },
+                {
+                    "type": "response_item",
+                    "payload": {
+                        "type": "custom_tool_call",
+                        "name": "apply_patch",
+                        "input": "*** Update File: src/agent_workbench/graph.py",
+                    },
+                },
+            ]
+            path.write_text("\n".join(json.dumps(event) for event in events) + "\n", encoding="utf-8")
+
+            details = inspect_session(path)
+
+            self.assertEqual(details["project_name"], "agent-workbench")
+            self.assertEqual(details["summary"], "Redesenhe o mapa de agents")
+            self.assertEqual(details["last_activity"], "Editando arquivos")
+            self.assertIn("graph.py", details["recent_files"])
 
 
 class ConfigurationTests(unittest.TestCase):

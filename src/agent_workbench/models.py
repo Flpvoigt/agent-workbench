@@ -13,6 +13,12 @@ class AgentSession:
     size_bytes: int
     active: bool
     summary: str = ""
+    cwd: Path | None = None
+    project_name: str = "Sem projeto"
+    source: str = "codex"
+    event_count: int = 0
+    last_activity: str = "Aguardando"
+    recent_files: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)

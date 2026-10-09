@@ -2,13 +2,15 @@
 
 Aplicativo desktop local para acompanhar sessões do Codex, processos ativos, repositórios Git e pull requests do GitHub.
 
-## Recursos do MVP
+## Recursos
 
-- Lista as sessões locais encontradas em `~/.codex/sessions`.
-- Destaca sessões recentemente atualizadas como ativas.
-- Retoma uma sessão selecionada em uma nova janela com `codex resume`.
-- Monitora branch, alterações locais, remote e PRs dos repositórios adicionados.
-- Abre o repositório no Explorador de Arquivos.
+- Exibe agents e repositórios em um mapa operacional animado.
+- Conecta cada sessão ao repositório correspondente usando o diretório real da sessão.
+- Mostra arquivos recentes circulando pelas conexões e a ferramenta atualmente em uso.
+- Abre um inspector funcional ao selecionar um agent ou repositório.
+- Retoma sessões em uma nova janela com `codex resume`.
+- Descobre automaticamente repositórios relacionados às sessões e monitora branch, alterações e PRs.
+- Permite pausar a animação sem interromper a coleta de dados.
 - Mantém configuração local fora do Git em `~/.agent-workbench/config.json`.
 - Funciona sem servidor web e sem dependências Python externas.
 

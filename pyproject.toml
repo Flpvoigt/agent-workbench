@@ -16,7 +16,7 @@ authors = [
 dependencies = []
 
 [project.scripts]
-agent-workbench = "agent_workbench.app:main"
+agent-workbench = "agent_workbench.live_app:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
