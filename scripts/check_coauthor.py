@@ -22,7 +22,11 @@ def git(*args: str) -> str:
 
 
 def commits_without_trailer(base: str) -> list[str]:
-    commits = [item for item in git("rev-list", f"{base}..HEAD").splitlines() if item]
+    commits = [
+        item
+        for item in git("rev-list", "--no-merges", f"{base}..HEAD").splitlines()
+        if item
+    ]
     missing: list[str] = []
     for commit in commits:
         message = git("show", "-s", "--format=%B", commit)
