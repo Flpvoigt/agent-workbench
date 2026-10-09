@@ -5,7 +5,9 @@ import tempfile
 import unittest
 from datetime import datetime, timedelta
 from pathlib import Path
+from unittest.mock import patch
 
+import agent_workbench.services as services
 from agent_workbench.services import (
     discover_sessions,
     load_repository_paths,
@@ -57,6 +59,22 @@ class ConfigurationTests(unittest.TestCase):
             result = load_repository_paths(config)
 
             self.assertEqual(result, [repository.resolve()])
+
+
+class CommandExecutionTests(unittest.TestCase):
+    @patch("agent_workbench.services.subprocess.run")
+    def test_background_commands_do_not_open_a_window(self, run_mock) -> None:
+        run_mock.return_value.returncode = 0
+        run_mock.return_value.stdout = "ok"
+        run_mock.return_value.stderr = ""
+
+        code, output, error = services._run(["git", "--version"])
+
+        self.assertEqual((code, output, error), (0, "ok", ""))
+        self.assertEqual(
+            run_mock.call_args.kwargs["creationflags"],
+            services.CREATE_NO_WINDOW,
+        )
 
 
 if __name__ == "__main__":
