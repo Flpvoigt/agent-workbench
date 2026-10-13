@@ -181,7 +181,7 @@ def inspect_session(path: Path) -> dict[str, Any]:
     lines = head_lines + tail_lines
     seen: set[str] = set()
     for line in lines:
-        fingerprint = line[:160]
+        fingerprint = line.rstrip("\r\n")
         if fingerprint in seen:
             continue
         seen.add(fingerprint)
