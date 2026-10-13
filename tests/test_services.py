@@ -93,6 +93,38 @@ class SessionDiscoveryTests(unittest.TestCase):
             self.assertEqual(details["last_activity"], "Editando arquivos")
             self.assertIn("graph.py", details["recent_files"])
 
+    def test_distinct_events_with_a_long_common_prefix_are_preserved(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "session.jsonl"
+            common_prefix = "x" * 200
+            events = [
+                {
+                    "type": "response_item",
+                    "payload": {
+                        "type": "custom_tool_call",
+                        "name": "apply_patch",
+                        "input": f"{common_prefix} src/first.py",
+                    },
+                },
+                {
+                    "type": "response_item",
+                    "payload": {
+                        "type": "custom_tool_call",
+                        "name": "apply_patch",
+                        "input": f"{common_prefix} src/second.py",
+                    },
+                },
+            ]
+            path.write_text(
+                "\n".join(json.dumps(event) for event in events) + "\n",
+                encoding="utf-8",
+            )
+
+            details = inspect_session(path)
+
+            self.assertEqual(details["event_count"], 2)
+            self.assertEqual(details["recent_files"], ("first.py", "second.py"))
+
 
 class ConfigurationTests(unittest.TestCase):
     def test_repository_paths_round_trip_and_deduplicate(self) -> None:
