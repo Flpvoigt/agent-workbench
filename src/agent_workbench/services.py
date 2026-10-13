@@ -240,6 +240,8 @@ def discover_sessions(
     now: datetime | None = None,
     limit: int = 50,
 ) -> list[AgentSession]:
+    if limit <= 0:
+        return []
     root = sessions_dir or Path.home() / ".codex" / "sessions"
     if not root.is_dir():
         return []
@@ -254,7 +256,7 @@ def discover_sessions(
     candidates.sort(key=lambda item: item[1].st_mtime, reverse=True)
 
     sessions: list[AgentSession] = []
-    for path, stat in candidates[: max(1, limit)]:
+    for path, stat in candidates[:limit]:
         modified = datetime.fromtimestamp(stat.st_mtime)
         details = inspect_session(path)
         sessions.append(

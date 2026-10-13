@@ -19,6 +19,13 @@ from agent_workbench.services import (
 
 
 class SessionDiscoveryTests(unittest.TestCase):
+    def test_zero_limit_returns_no_sessions(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "session.jsonl").write_text("{}\n", encoding="utf-8")
+
+            self.assertEqual(discover_sessions(root, limit=0), [])
+
     def test_discovers_newest_session_and_extracts_summary(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
