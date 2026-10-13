@@ -125,6 +125,38 @@ class SessionDiscoveryTests(unittest.TestCase):
             self.assertEqual(details["event_count"], 2)
             self.assertEqual(details["recent_files"], ("first.py", "second.py"))
 
+    def test_tracks_common_source_script_and_data_file_types(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "session.jsonl"
+            events = [
+                {
+                    "type": "response_item",
+                    "payload": {
+                        "type": "function_call",
+                        "name": "exec_command",
+                        "arguments": file_name,
+                    },
+                }
+                for file_name in (
+                    "src/Main.java",
+                    "db/schema.sql",
+                    "scripts/run.sh",
+                    "data/report.csv",
+                    "config/layout.xml",
+                )
+            ]
+            path.write_text(
+                "\n".join(json.dumps(event) for event in events) + "\n",
+                encoding="utf-8",
+            )
+
+            details = inspect_session(path)
+
+            self.assertEqual(
+                details["recent_files"],
+                ("Main.java", "schema.sql", "run.sh", "report.csv", "layout.xml"),
+            )
+
 
 class ConfigurationTests(unittest.TestCase):
     def test_repository_paths_round_trip_and_deduplicate(self) -> None:

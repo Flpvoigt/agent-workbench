@@ -21,7 +21,8 @@ SESSION_ID_PATTERN = re.compile(
     re.IGNORECASE,
 )
 FILE_PATTERN = re.compile(
-    r"(?i)(?:[a-z]:[\\/]|[./])?(?:[\w .@()-]+[\\/])*[\w.@()-]+\.(?:py|md|json|toml|ya?ml|js|jsx|ts|tsx|html|css|ps1|rs|go)"
+    r"(?i)(?:[a-z]:[\\/]|[./])?(?:[\w .@()-]+[\\/])*[\w.@()-]+\."
+    r"(?:bat|c|cmd|cpp|csv|css|go|h|hpp|html|java|js|json|jsx|kt|kts|md|ps1|py|rs|sh|sql|toml|ts|tsx|txt|xml|ya?ml)(?![\w])"
 )
 IGNORED_PROMPT_PREFIXES = (
     "<environment_context",
