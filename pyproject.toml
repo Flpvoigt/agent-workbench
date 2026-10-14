@@ -13,16 +13,19 @@ authors = [
   { name = "Flpvoigt" },
   { name = "GustavoLoes", email = "gustavoloes7@gmail.com" },
 ]
-dependencies = []
+dependencies = ["pywebview>=6.2,<7"]
 
 [project.scripts]
-agent-workbench = "agent_workbench.live_app:main"
+agent-workbench = "agent_workbench.desktop_app:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+agent_workbench = ["web/*.html", "web/*.css", "web/*.js"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
