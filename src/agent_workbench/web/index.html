@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agent Workbench</title>
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="rail">
+        <div class="brand-mark" aria-label="Agent Workbench"><i></i><b></b></div>
+        <button class="rail-action active" data-tip="Mapa ao vivo" aria-label="Mapa ao vivo">⌁</button>
+        <button class="rail-action" id="refreshRail" data-tip="Atualizar" aria-label="Atualizar">↻</button>
+        <button class="rail-action" id="addRail" data-tip="Adicionar repositório" aria-label="Adicionar repositório">＋</button>
+        <span class="rail-spacer"></span>
+        <button class="rail-action" id="fitRail" data-tip="Reorganizar mapa" aria-label="Reorganizar mapa">◎</button>
+      </aside>
+
+      <main class="main-shell">
+        <header class="topbar">
+          <div class="title-block">
+            <span class="overline">LOCAL OPERATIONS</span>
+            <h1>Agent Mission Control</h1>
+          </div>
+          <div class="metrics">
+            <div class="metric"><span>AGENTS</span><strong id="agentMetric">—</strong></div>
+            <div class="metric"><span>WORKSPACES</span><strong id="repoMetric">—</strong></div>
+            <div class="metric"><span>SYNC</span><strong id="syncMetric">iniciando</strong></div>
+          </div>
+          <button class="button ghost" id="pauseButton">Pausar fluxo</button>
+          <button class="button primary" id="refreshButton">Atualizar</button>
+        </header>
+
+        <section class="workspace">
+          <div class="map-panel" id="mapPanel">
+            <div class="map-grid"></div>
+            <div class="zone-label agents-zone"><b>AGENTS</b><span>sessões locais</span></div>
+            <div class="zone-label runtime-zone"><b>RUNTIME</b><span>orquestração local</span></div>
+            <div class="zone-label repos-zone"><b>WORKSPACES</b><span>repositórios conectados</span></div>
+            <svg class="connections" id="connections" aria-hidden="true"></svg>
+            <div class="nodes" id="nodes"></div>
+            <div class="runtime-core" id="runtimeCore">
+              <span class="core-orbit orbit-a"></span>
+              <span class="core-orbit orbit-b"></span>
+              <span class="core-dot"></span>
+              <strong>RUNTIME</strong>
+              <small id="coreStatus">0 LIVE</small>
+            </div>
+            <div class="empty-state" id="emptyState" hidden>Nenhuma sessão local encontrada</div>
+          </div>
+
+          <aside class="inspector" id="inspector">
+            <div class="inspector-empty">
+              <span class="overline">INSPECTOR</span>
+              <h2>Selecione um bloco</h2>
+              <p>Os detalhes e ações do agent ou workspace aparecem aqui.</p>
+            </div>
+          </aside>
+        </section>
+
+        <footer class="live-feed">
+          <span class="feed-label">LIVE FEED</span>
+          <div class="feed-events" id="feedEvents"></div>
+          <time id="clock">--:--:--</time>
+        </footer>
+      </main>
+    </div>
+    <div class="toast" id="toast"></div>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,10 +1,10 @@
 # Agent Workbench
 
-Aplicativo desktop local para acompanhar sessões do Codex, processos ativos, repositórios Git e pull requests do GitHub.
+Aplicativo desktop local com interface HTML/CSS/SVG para acompanhar sessões do Codex, processos ativos, repositórios Git e pull requests do GitHub. A interface roda em uma janela nativa com pywebview, sem abrir uma aba do navegador.
 
 ## Recursos
 
-- Exibe agents e repositórios em um Mission Control operacional animado.
+- Exibe agents e repositórios em um Mission Control vetorial e animado.
 - Permite reorganizar os blocos por arraste, mantendo o núcleo central fixo e as conexões atualizadas em tempo real.
 - Conecta cada sessão ao repositório correspondente usando o diretório real da sessão.
 - Mostra arquivos recentes circulando pelas conexões e a ferramenta atualmente em uso.
@@ -15,7 +15,7 @@ Aplicativo desktop local para acompanhar sessões do Codex, processos ativos, re
 - Agrupa sessões antigas, seleciona automaticamente o trabalho ativo e reduz o ruído visual.
 - Oferece atalhos: `F5` atualiza, `Espaço` pausa o fluxo e `Esc` volta ao foco principal.
 - Mantém configuração local fora do Git em `~/.agent-workbench/config.json`.
-- Funciona sem servidor web e sem dependências Python externas.
+- Usa uma WebView local; nenhum conteúdo da interface é hospedado publicamente.
 
 ## Requisitos
 
