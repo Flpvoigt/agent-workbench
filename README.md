@@ -4,13 +4,16 @@ Aplicativo desktop local para acompanhar sessões do Codex, processos ativos, re
 
 ## Recursos
 
-- Exibe agents e repositórios em um mapa operacional animado.
+- Exibe agents e repositórios em um Mission Control operacional animado.
+- Permite reorganizar os blocos por arraste, mantendo o núcleo central fixo e as conexões atualizadas em tempo real.
 - Conecta cada sessão ao repositório correspondente usando o diretório real da sessão.
 - Mostra arquivos recentes circulando pelas conexões e a ferramenta atualmente em uso.
 - Abre um inspector funcional ao selecionar um agent ou repositório.
 - Retoma sessões em uma nova janela com `codex resume`.
 - Descobre automaticamente repositórios relacionados às sessões e monitora branch, alterações e PRs.
 - Permite pausar a animação sem interromper a coleta de dados.
+- Agrupa sessões antigas, seleciona automaticamente o trabalho ativo e reduz o ruído visual.
+- Oferece atalhos: `F5` atualiza, `Espaço` pausa o fluxo e `Esc` volta ao foco principal.
 - Mantém configuração local fora do Git em `~/.agent-workbench/config.json`.
 - Funciona sem servidor web e sem dependências Python externas.
 
