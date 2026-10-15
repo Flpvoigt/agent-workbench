@@ -157,6 +157,38 @@ class SessionDiscoveryTests(unittest.TestCase):
                 ("Main.java", "schema.sql", "run.sh", "report.csv", "layout.xml"),
             )
 
+    def test_tracks_common_build_and_configuration_files(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "session.jsonl"
+            events = [
+                {
+                    "type": "response_item",
+                    "payload": {
+                        "type": "function_call",
+                        "name": "exec_command",
+                        "arguments": file_name,
+                    },
+                }
+                for file_name in (
+                    "Dockerfile",
+                    ".env",
+                    "config/app.ini",
+                    "android/settings.gradle",
+                    "poetry.lock",
+                )
+            ]
+            path.write_text(
+                "\n".join(json.dumps(event) for event in events) + "\n",
+                encoding="utf-8",
+            )
+
+            details = inspect_session(path)
+
+            self.assertEqual(
+                details["recent_files"],
+                ("Dockerfile", ".env", "app.ini", "settings.gradle", "poetry.lock"),
+            )
+
 
 class ConfigurationTests(unittest.TestCase):
     def test_repository_paths_round_trip_and_deduplicate(self) -> None:
