@@ -21,11 +21,11 @@ SESSION_ID_PATTERN = re.compile(
     re.IGNORECASE,
 )
 FILE_PATTERN = re.compile(
-    r"(?i)(?<![\w@()-])(?:[a-z]:[\\/]|[./])?(?:[\w .@()-]+[\\/])*"
+    r"(?i)(?<![\w@()-])(?:[a-z]:[\\/]|[./])?(?:[\w.@()-]+[\\/])*"
     r"(?:"
     r"Dockerfile|Makefile|Procfile|\.(?:dockerignore|env|gitignore)|"
     r"[\w@()-][\w.@()-]*\."
-    r"(?:bat|c|cfg|cmd|cpp|csv|css|env|go|gradle|h|hpp|html|ini|java|js|json|jsx|kt|kts|lock|md|properties|ps1|py|rs|sh|sql|toml|ts|tsx|txt|xml|ya?ml)"
+    r"(?:bat|c|cfg|cmd|cpp|csv|css|docx?|env|gif|go|gradle|h|hpp|html|ini|java|jpe?g|js|json|jsx|kt|kts|lock|md|odp|ods|odt|pdf|png|pptx?|properties|ps1|py|rs|sh|sql|svg|toml|ts|tsx|txt|webp|xlsx?|xml|ya?ml)"
     r")(?![\w])"
 )
 IGNORED_PROMPT_PREFIXES = (
