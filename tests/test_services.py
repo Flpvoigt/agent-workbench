@@ -189,6 +189,29 @@ class SessionDiscoveryTests(unittest.TestCase):
                 ("Dockerfile", ".env", "app.ini", "settings.gradle", "poetry.lock"),
             )
 
+    def test_tracks_common_document_and_image_files(self) -> None:
+        payload = {
+            "arguments": (
+                "reports/summary.pdf docs/brief.docx data/metrics.xlsx "
+                "slides/demo.pptx assets/diagram.svg images/screenshot.png "
+                "images/photo.jpg images/preview.webp"
+            )
+        }
+
+        self.assertEqual(
+            services._recent_file_names(payload),
+            [
+                "summary.pdf",
+                "brief.docx",
+                "metrics.xlsx",
+                "demo.pptx",
+                "diagram.svg",
+                "screenshot.png",
+                "photo.jpg",
+                "preview.webp",
+            ],
+        )
+
 
 class ConfigurationTests(unittest.TestCase):
     def test_repository_paths_round_trip_and_deduplicate(self) -> None:
